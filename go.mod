@@ -1,4 +1,4 @@
-module github.com/afiffazun/mining-asset-management
+module github.com/afiffaizun/mining-asset-management
 
 go 1.26.4
 
