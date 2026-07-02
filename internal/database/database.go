@@ -6,7 +6,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 
-	"github.com/<username>/mining-asset-management/internal/config"
+	"github.com/afiffaizun/mining-asset-management/internal/config"
 )
 
 func Connect(cfg *config.Config) (*gorm.DB, error) {
@@ -20,5 +20,12 @@ func Connect(cfg *config.Config) (*gorm.DB, error) {
 		cfg.DBPort,
 	)
 
-	return gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return db, nil
+
 }

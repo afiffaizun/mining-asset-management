@@ -3,33 +3,16 @@ package main
 import (
 	"log"
 
-	"github.com/afiffaizun/mining-asset-management/internal/config"
-	"github.com/afiffaizun/mining-asset-management/internal/handler"
-	"github.com/afiffaizun/mining-asset-management/internal/logger"
-	"github.com/afiffaizun/mining-asset-management/internal/router"
+	"github.com/afiffaizun/mining-asset-management/internal/app"
 )
 
 func main() {
-
-	cfg := config.Load()
-
-	logg := logger.New()
-
-	health := handler.HealthHandler{
-		AppName: cfg.AppName,
-		Env:     cfg.AppEnv,
+	application, err := app.New()
+	if err != nil {
+		log.Fatalf("Failed to initialize application: %v", err)
 	}
 
-	r := router.SetupRouter(health)
-
-	logg.Info("Starting server",
-		"port", cfg.AppPort,
-	)
-
-	err := r.Run(":" + cfg.AppPort)
-
-	if err != nil {
+	if err := application.Run(); err != nil {
 		log.Fatal(err)
 	}
-
 }
